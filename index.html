@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a1322">
+  <meta name="description" content="MultiChat Desktop Windows 多账号工作台，WhatsApp 和 Facebook 多账号独立环境管理。">
+  <title>MultiChat Desktop｜Windows 多账号工作台</title>
+  <style>
+    :root { color-scheme: dark; --bg:#091322; --panel:#11243a; --line:#263a50; --text:#f1f6fc; --muted:#a2b4c9; --accent:#46e0b4; --accent2:#57a7ff; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; font:16px/1.65 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; color:var(--text); background:radial-gradient(ellipse 740px 460px at 75% 5%,#173b52 0%,transparent 80%),var(--bg); }
+    a { color:inherit; }
+    header, main, footer { width:min(1120px,calc(100% - 36px)); margin:0 auto; }
+    header { min-height:82px; display:flex; align-items:center; justify-content:space-between; gap:16px; border-bottom:1px solid var(--line); }
+    .brand { display:flex; align-items:center; gap:12px; font-weight:800; font-size:19px; letter-spacing:.1px; text-decoration:none; }
+    .brand-icon { width:40px; height:40px; border-radius:12px; display:grid; place-items:center; color:#0b1c24; background:linear-gradient(135deg,var(--accent),#88d3ff); font-weight:900; }
+    .top-link { text-decoration:none; color:var(--muted); font-size:14px; }
+    .top-link:hover { color:white; }
+    .hero { padding:82px 0 72px; display:grid; grid-template-columns:minmax(0,1fr) minmax(350px,.88fr); align-items:center; gap:46px; }
+    .eyebrow { font-size:13px; text-transform:uppercase; letter-spacing:2px; color:var(--accent); font-weight:800; }
+    h1 { font-size:clamp(35px,5vw,57px); letter-spacing:-1.7px; line-height:1.16; margin:16px 0 22px; }
+    h1 span { color:var(--accent); }
+    .lead { font-size:18px; color:var(--muted); max-width:575px; margin:0 0 29px; }
+    .actions { display:flex; gap:12px; flex-wrap:wrap; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; min-height:49px; border-radius:12px; padding:11px 19px; font-weight:750; font-size:15px; text-decoration:none; border:1px solid var(--line); transition:transform .15s,background .15s; }
+    .btn:hover { transform:translateY(-1px); }
+    .btn-primary { color:#07251c; background:var(--accent); border-color:var(--accent); }
+    .btn-primary[aria-disabled="true"] { color:#c1d9d1; background:#234c47; border-color:#3f6661; pointer-events:none; }
+    .btn-secondary { background:#162b42; }
+    .meta { margin-top:17px; color:var(--muted); font-size:14px; }
+    .mockup { padding:14px; border:1px solid #3c546a; border-radius:18px; background:#0d1a2b; box-shadow:0 30px 75px #0006; }
+    .titlebar { height:26px; display:flex; align-items:center; justify-content:space-between; color:#7890a9; padding:0 7px; font-size:11px; }
+    .dots { display:flex; gap:5px; } .dots i { display:block; width:7px; height:7px; border-radius:50%; background:#607b8d; }
+    .app-preview { height:280px; display:grid; grid-template-columns:118px 1fr; overflow:hidden; border:1px solid #29435b; border-radius:9px; }
+    .sidebar { background:#0c1826; padding:13px 8px; display:flex; flex-direction:column; gap:7px; }
+    .sidebar b { font-size:11px; color:#d5e4f0; padding:0 3px 8px; }
+    .account { display:flex; gap:6px; align-items:center; border-radius:7px; padding:8px 5px; background:#162b3f; font-size:10px; white-space:nowrap; }
+    .avatar { display:grid; place-items:center; flex-shrink:0; width:23px; height:23px; font-size:11px; color:#10222b; font-weight:bold; border-radius:7px; }
+    .a1 { background:#4adea8; } .a2 { background:#68afff; } .a3 { background:#d79cff; } .a4 { background:#ffc27d; }
+    .chat { background:#d9e4e7; color:#273944; padding:14px 18px; }
+    .chat-head { background:#f8fbfa; height:35px; border-radius:8px; padding:8px; font-size:10px; font-weight:700; }
+    .bubble { margin-top:16px; background:#fff; border-radius:9px 9px 9px 3px; width:72%; padding:13px; font-size:11px; box-shadow:0 2px 3px #0001; }
+    .bubble.right { margin-left:auto; background:#dcf8d6; border-radius:9px 9px 3px 9px; }
+    .pill { width:100%; height:32px; background:#fff; border-radius:8px; margin-top:50px; }
+    section { padding:38px 0 55px; }
+    h2 { font-size:29px; letter-spacing:-.5px; margin:0 0 9px; }
+    .section-desc { color:var(--muted); margin:0 0 24px; }
+    .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; }
+    .card { border:1px solid var(--line); border-radius:16px; background:#12243a; padding:24px; }
+    .card-icon { font-size:24px; }
+    .card h3 { margin:10px 0 7px; } .card p { margin:0; color:var(--muted); font-size:14px; }
+    .download-box { background:linear-gradient(115deg,#142f40,#10243c); border:1px solid #35606e; padding:26px; border-radius:18px; display:flex; align-items:center; justify-content:space-between; gap:22px; }
+    .download-box strong { font-size:20px; }
+    .download-box p { color:var(--muted); margin:7px 0 0; font-size:14px; }
+    .release-status { margin-top:12px; font-size:14px; color:var(--accent); }
+    footer { margin-top:35px; padding:28px 0 40px; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; font-size:13px; color:var(--muted); }
+    footer a { color:#d0e2ee; }
+    @media(max-width:790px) { .hero { grid-template-columns:1fr; padding:48px 0; } .mockup { max-width:560px; } .cards { grid-template-columns:1fr; } .download-box { display:block; } .download-box .btn { margin-top:18px; } }
+    @media(max-width:430px) { .app-preview{height:233px;grid-template-columns:103px 1fr;} .chat{padding:9px}.hero{gap:26px;} }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="#home"><span class="brand-icon">M</span>MultiChat Desktop</a>
+    <a class="top-link" href="#download">Windows 下载 ↓</a>
+  </header>
+  <main>
+    <div class="hero" id="home">
+      <div>
+        <div class="eyebrow">WINDOWS 多账号工作台</div>
+        <h1>多个账号，<br><span>一个工作界面。</span></h1>
+        <p class="lead">在桌面端集中管理多个 WhatsApp 与 Facebook 账号。独立登录环境、紧凑的账号列表、直观切换，减少重复操作。</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#download">下载 Windows 版 ↓</a>
+          <a class="btn btn-secondary" id="release-link-top" href="#download">查看版本信息</a>
+        </div>
+        <div class="meta">适用于 Windows 电脑 · 免费下载 · 登录环境彼此独立</div>
+      </div>
+      <div class="mockup" role="img" aria-label="MultiChat Desktop 的示意界面：左侧账号列表，右侧聊天区域">
+        <div class="titlebar"><span>MultiChat Desktop</span><span class="dots"><i></i><i></i><i></i></span></div>
+        <div class="app-preview">
+          <div class="sidebar">
+            <b>你的账号</b>
+            <div class="account"><span class="avatar a1">M</span>WhatsApp 01</div>
+            <div class="account"><span class="avatar a2">M</span>WhatsApp 02</div>
+            <div class="account"><span class="avatar a3">F</span>Facebook 01</div>
+            <div class="account"><span class="avatar a4">F</span>Facebook 02</div>
+          </div>
+          <div class="chat"><div class="chat-head">● 对话窗口</div><div class="bubble">你好！今天需要处理哪些消息？</div><div class="bubble right">我正在用 MultiChat 回复。</div><div class="pill"></div></div>
+        </div>
+      </div>
+    </div>
+    <section id="features">
+      <h2>专注多账号管理</h2>
+      <p class="section-desc">简洁设计，不挤占聊天区域。</p>
+      <div class="cards">
+        <div class="card"><div class="card-icon">🔐</div><h3>独立登录环境</h3><p>每个账号拥有单独的本地会话数据，不因重命名或排序而改变账号身份。</p></div>
+        <div class="card"><div class="card-icon">↕️</div><h3>方便整理账号</h3><p>支持账号拖动排序、重命名以及独立头像颜色，快速识别各个工作账号。</p></div>
+        <div class="card"><div class="card-icon">🪟</div><h3>专为 Windows 优化</h3><p>紧凑的左侧导航、可调整的桌面窗口，为聊天保留更多空间。</p></div>
+      </div>
+    </section>
+    <section id="download">
+      <h2>下载 MultiChat Desktop</h2>
+      <p class="section-desc">通过 GitHub Releases 获取公开发布的最新版 Windows 安装程序。</p>
+      <div class="download-box">
+        <div>
+          <strong id="release-version">正在读取最新版本…</strong>
+          <p id="release-date">支持 Windows · 下载前请确认发布者和文件名</p>
+          <div class="release-status" id="release-status" role="status" aria-live="polite"></div>
+        </div>
+        <a class="btn btn-primary" id="download-button" href="#download" aria-disabled="true">检查下载链接中…</a>
+      </div>
+      <p class="meta">首次安装可能出现 Windows 安全提示。请确认文件来自本站对应的 GitHub Releases 发布页。升级前建议备份账号数据。</p>
+    </section>
+  </main>
+  <footer>
+    <span>© <span id="year"></span> MultiChat Desktop</span>
+    <span>非 WhatsApp 或 Facebook 官方产品；相关商标属于各自所有者。 <a id="release-link-footer" href="#download">历史版本 / 发布页</a></span>
+  </footer>
+  <script>
+    // 部署仓库：<GitHub 用户名>/multichat-desktop。用户名会从 GitHub Pages 域名自动识别。
+    (function () {
+      'use strict';
+      document.getElementById('year').textContent = new Date().getFullYear();
+      const hostname = location.hostname.toLowerCase();
+      const onPages = hostname.endsWith('.github.io');
+      const owner = onPages ? hostname.slice(0, -'.github.io'.length) : '';
+      const repo = 'multichat-desktop';
+      const mainLink = owner ? `https://github.com/${encodeURIComponent(owner)}/${repo}/releases` : '';
+      const latestLink = owner ? `${mainLink}/latest` : '';
+      const versionEl = document.getElementById('release-version');
+      const dateEl = document.getElementById('release-date');
+      const statusEl = document.getElementById('release-status');
+      const downloadEl = document.getElementById('download-button');
+      const topEl = document.getElementById('release-link-top');
+      const footEl = document.getElementById('release-link-footer');
+      if (!owner) {
+        versionEl.textContent = '等待网站发布';
+        statusEl.textContent = '请先把网站部署到 GitHub Pages。';
+        downloadEl.textContent = '暂未开放下载';
+        return;
+      }
+      topEl.href = mainLink;
+      footEl.href = mainLink;
+      downloadEl.href = mainLink;
+      downloadEl.textContent = '查看发布页面';
+      downloadEl.removeAttribute('aria-disabled');
+      fetch(`https://api.github.com/repos/${encodeURIComponent(owner)}/${repo}/releases/latest`, {
+        headers: { Accept: 'application/vnd.github+json' }, cache: 'no-store'
+      }).then(async response => {
+        if (!response.ok) throw new Error(String(response.status));
+        return response.json();
+      }).then(release => {
+        versionEl.textContent = `最新版本：${release.tag_name || release.name || '已发布'}`;
+        if (release.published_at) dateEl.textContent = `发布于 ${new Date(release.published_at).toLocaleDateString('zh-CN')} · Windows`; 
+        const assets = Array.isArray(release.assets) ? release.assets : [];
+        const exe = assets.find(a => /setup.*\.exe$/i.test(a.name)) || assets.find(a => /\.exe$/i.test(a.name));
+        if (exe && exe.browser_download_url) {
+          downloadEl.href = exe.browser_download_url;
+          downloadEl.textContent = '下载 Windows 安装包 ↓';
+          statusEl.textContent = `安装文件：${exe.name}`;
+        } else {
+          downloadEl.href = release.html_url || latestLink;
+          downloadEl.textContent = '查看最新版本';
+          statusEl.textContent = '该版本暂未附带 EXE 安装包。';
+        }
+      }).catch(() => {
+        versionEl.textContent = '版本信息暂不可用';
+        statusEl.textContent = '尚未发布版本，或 GitHub 暂时无法连接。';
+        downloadEl.href = mainLink;
+        downloadEl.textContent = '查看发布页面';
+      });
+    })();
+  </script>
+</body>
+</html>
